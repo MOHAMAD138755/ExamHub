@@ -1,0 +1,47 @@
+@keyframes loading {
+    25%{
+        opacity: .3;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes loading2 {
+    25%{
+        opacity: 1;
+    }
+    50%{
+        opacity: .3;
+    }
+    100%{
+        opacity: .8;
+    }
+}
+
+@keyframes loading3 {
+    25%{
+        opacity: .8;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: .3;
+    }
+}
+
+.loading{
+    animation: loading 1s infinite;
+}
+
+.loading2{
+    animation: loading2 1s infinite;
+}
+
+.loading3{
+    animation: loading3 1s infinite;
+}
