@@ -8,3 +8,4 @@ Route::get('/', function () {
 
 Route::livewire('/login', 'auth.login')->name('login');
 Route::livewire('/verify', 'auth.verify')->name('verify');
+Route::livewire('/dashboard', 'dashboard.index')->name('dashboard.index');
