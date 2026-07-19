@@ -9,4 +9,16 @@ class OtpCode extends Model
     protected $fillable = [
         'id','code','expires_at','used_at','user_id'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'expires_at' => 'date:Y-m-d H:i:s',
+            'used_at' => 'date:Y-m-d',
+            'user_id' => 'integer',
+            'code' => 'string',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 }
