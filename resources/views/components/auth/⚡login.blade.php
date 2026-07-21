@@ -7,6 +7,7 @@ use Livewire\Component;
 
 new #[Layout('layouts::auth')] class extends Component {
     public string $email = '';
+    public $code;
 
     public function rules(): array
     {
@@ -28,11 +29,17 @@ new #[Layout('layouts::auth')] class extends Component {
 
     public function login(LoginUserAction $loginUserAction)
     {
-        $validateDate = $this->validate();
+        try {
+            $validateDate = $this->validate();
 
-        $loginUserAction->execute($validateDate['email']);
+            $user = $loginUserAction->execute($validateDate['email']);
 
-        $this->redirectRoute('verify',navigate: true);
+            session(['login_email' => $validateDate['email'], 'user_id' => $user->id]);
+
+            $this->redirectRoute('verify', navigate: true);
+        }catch (Exception $exception){
+            $this->addError('code',$exception->getMessage());
+        }
     }
 };
 ?>
@@ -66,6 +73,12 @@ new #[Layout('layouts::auth')] class extends Component {
                 <div class="p-[5px] text-center" wire:show="$errors.has('email')">
                     @error('email')
                     <span class="text-sm text-red-600" wire:text="$errors.first('email')"></span>
+                    @enderror
+                </div>
+
+                <div class="p-[5px] text-center" wire:show="$errors.has('code')">
+                    @error('code')
+                    <span class="text-sm text-red-600" wire:text="$errors.first('code')"></span>
                     @enderror
                 </div>
 
