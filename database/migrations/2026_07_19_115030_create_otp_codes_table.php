@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('code');
             $table->timestamp('expires_at')->index();
             $table->timestamp('used_at')->nullable();
-            $table->unsignedTinyInteger('send_count')->default(1);
             $table->timestamps();
         });
     }

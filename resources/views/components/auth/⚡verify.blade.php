@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Auth\ResendCodeUserAction;
 use App\Actions\Auth\VerifyUserAction;
 use App\Http\Requests\VerifyRequest;
 use App\Models\OtpCode;
@@ -50,10 +51,20 @@ new #[Layout('layouts::auth')] #[Title('تایید کد ورود')] class extend
 
             Auth::login($user, true);
 
-            $this->redirectRoute('dashboard.index',navigate: true);
+            $this->redirectRoute('dashboard.index', navigate: true);
 
+        } catch (Exception $exception) {
+            $this->addError('code', $exception->getMessage());
         }
-        catch (Exception $exception){
+    }
+
+    public function resendCode(ResendCodeUserAction $resendCodeUserAction)
+    {
+        try {
+            $resendCodeUserAction->execute(session('user_id'));
+
+            $this->redirectRoute('verify', navigate: true);
+        }catch (Exception $exception){
             $this->addError('code',$exception->getMessage());
         }
     }
@@ -80,7 +91,8 @@ new #[Layout('layouts::auth')] #[Title('تایید کد ورود')] class extend
         <div class="text-center mt-3"
              x-data="{
         expiresAt: {{ $this->expires_at }},
-        timeLeft: '00:00'
+        timeLeft: '00:00',
+        expired:false
     }"
              x-init="
         const updateTimer = () => {
@@ -89,6 +101,7 @@ new #[Layout('layouts::auth')] #[Title('تایید کد ورود')] class extend
 
             if (diff <= 0) {
                 timeLeft = '00:00';
+                expired = true;
                 return;
             }
 
@@ -106,7 +119,19 @@ new #[Layout('layouts::auth')] #[Title('تایید کد ورود')] class extend
         setInterval(updateTimer, 1000);
     "
         >
-            <span x-text="timeLeft"></span>
+            <div x-show="!expired">
+                <span x-text="timeLeft"></span>
+            </div>
+            <div x-show="expired">
+
+                <button
+                    wire:click="resendCode"
+                    class="text-blue-600 cursor-pointer"
+                >
+                    ارسال مجدد کد
+                </button>
+
+            </div>
         </div>
 
         <div class="flex justify-center items-center w-full">
