@@ -147,6 +147,8 @@
                     <span>تنظیمات</span>
                 </li>
 
+                @livewire('auth.logout')
+
             </ul>
         </div>
     </div >
@@ -251,6 +253,8 @@
                     <i class="fa-solid fa-gear text-gray-500 transition-all duration-300 group-hover:text-white"></i>
                     <span>تنظیمات</span>
                 </li>
+
+                @livewire('auth.logout')
 
             </ul>
         </div>

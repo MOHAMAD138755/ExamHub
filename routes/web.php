@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {\Illuminate\Support\Facades\Auth::logout();dd(auth()->check());
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -11,4 +11,8 @@ Route::middleware('guest')->group(function (){
     Route::livewire('/verify', 'auth.verify')->name('verify');
 });
 
-Route::livewire('/dashboard', 'dashboard.index')->name('dashboard.index');
+Route::middleware('auth')->group(function (){
+    Route::livewire('/dashboard', 'dashboard.index')->name('dashboard.index');
+    Route::livewire('/logout', 'auth.logout')->name('logout');
+});
+
