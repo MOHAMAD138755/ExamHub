@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Dashboard\SearchUserAction;
 use App\Actions\Dashboard\UserDeleteAction;
 use App\Actions\Dashboard\UserListAction;
 use Livewire\Attributes\Computed;
@@ -13,18 +14,20 @@ new #[Layout('layouts::dashboard')] #[Title('لیست کاربران')] class ex
 
     use WithPagination, WithoutUrlPagination;
 
+    public $searchItem = '';
+
     #[Computed]
     public function users()
     {
-        return app(UserListAction::class)->execute();
+        return app(UserListAction::class)->execute($this->searchItem);
     }
 
     public function delete($user_id)
     {
-       app(UserDeleteAction::class)->execute($user_id);
+        app(UserDeleteAction::class)->execute($user_id);
 
-       session()->flash('success','با موفقیت حذف شد');
-       $this->resetPage();
+        session()->flash('success', 'با موفقیت حذف شد');
+        $this->resetPage();
     }
 };
 ?>
@@ -33,6 +36,11 @@ new #[Layout('layouts::dashboard')] #[Title('لیست کاربران')] class ex
 >
 
     <h1 class="text-3xl pb-[40px]">لیست کاربران سایت</h1>
+
+    <div class="my-[30px]">
+            <input class="w-full h-[30px] border-2 outline-0 rounded-lg p-3 text-center" placeholder="جستجو..."
+                   type="text" wire:model.live.debounce.100ms="searchItem">
+    </div>
 
     <table class="w-full table-auto md:table-fixed border-collapse">
         <thead>
@@ -66,7 +74,9 @@ new #[Layout('layouts::dashboard')] #[Title('لیست کاربران')] class ex
         </tbody>
         <tfoot>
         @if(session()->has('success'))
-            <tr><td colspan="4" class="text-center text-green-600 p-4">{{ session('success') }}</td></tr>
+            <tr>
+                <td colspan="4" class="text-center text-green-600 p-4">{{ session('success') }}</td>
+            </tr>
         @endif
         </tfoot>
     </table>

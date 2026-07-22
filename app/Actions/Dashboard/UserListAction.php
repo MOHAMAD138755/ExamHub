@@ -6,8 +6,14 @@ use App\Models\User;
 
 class UserListAction
 {
-    public function execute()
+    public function execute($search)
     {
-        return User::latest()->paginate(5);
+        return User::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(5);
     }
 }
