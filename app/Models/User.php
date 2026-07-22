@@ -24,6 +24,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function otpCode()
+    {
+        return $this->hasOne(OtpCode::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

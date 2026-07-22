@@ -10,6 +10,11 @@ class OtpCode extends Model
         'id','code','expires_at','used_at','user_id'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     protected function casts(): array
     {
         return [
