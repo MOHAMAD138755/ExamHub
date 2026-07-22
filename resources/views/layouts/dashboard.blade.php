@@ -64,10 +64,10 @@
                 </li>
 
                 <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
+        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('dashboard.users') ? 'bg-blue-600 text-white' : '' }}">
 
                     <i class="fa-solid fa-users text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>کاربران</span>
+                    <a wire:navigate href="{{ route('dashboard.users') }}">کاربران</a>
                 </li>
 
                 <li class="rounded-xl {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}" x-data="{ open: @js(request()->routeIs('')) }">
@@ -171,10 +171,10 @@
                 </li>
 
                 <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
+        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('dashboard.users') ? 'bg-blue-600 text-white' : '' }}">
 
                     <i class="fa-solid fa-users text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>کاربران</span>
+                    <a wire:navigate href="{{ route('dashboard.users') }}">کاربران</a>
                 </li>
 
                 <li class="rounded-xl {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}" x-data="{ open: @js(request()->routeIs('')) }">

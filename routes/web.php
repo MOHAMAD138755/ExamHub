@@ -12,7 +12,10 @@ Route::middleware('guest')->group(function (){
 });
 
 Route::middleware('auth')->group(function (){
-    Route::livewire('/dashboard', 'dashboard.index')->name('dashboard.index');
+    Route::prefix('dashboard')->group(function (){
+        Route::livewire('/', 'dashboard.index')->name('dashboard.index');
+        Route::livewire('/users', 'dashboard.user.user-list')->name('dashboard.users');
+    });
     Route::livewire('/logout', 'auth.logout')->name('logout');
 });
 
