@@ -37,9 +37,27 @@ new #[Layout('layouts::dashboard')] #[Title('لیست کاربران')] class ex
 
     <h1 class="text-3xl pb-[40px]">لیست کاربران سایت</h1>
 
-    <div class="my-[30px]">
-            <input class="w-full h-[30px] border-2 outline-0 rounded-lg p-3 text-center" placeholder="جستجو..."
-                   type="text" wire:model.live.debounce.100ms="searchItem">
+    <div class="relative w-[350px] my-[40px]">
+
+        <input wire:model.live.debounce.100ms="searchItem"
+               type="text"
+               placeholder="جستجوی آزمون..."
+               class="w-full border border-gray-300 rounded-lg pr-10 pl-4 py-2 outline-none
+               focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
+
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/>
+
+        </svg>
+
     </div>
 
     <table class="w-full table-auto md:table-fixed border-collapse">
@@ -59,8 +77,8 @@ new #[Layout('layouts::dashboard')] #[Title('لیست کاربران')] class ex
                 <td class="border-b border-gray-100 p-4 pr-8 pb-3 pt-3 text-center">{{ $user->email }}</td>
                 <td class="border-b border-gray-100 p-4 pr-8 pb-3 pt-3 text-center">
                     <button wire:click="delete({{ $user->id }})"
-                            class="w-[80%] h-[25px] transition-all hover:bg-red-500 cursor-pointer bg-red-600 rounded-lg">
-                        حذف
+                            class="size-[40px] transition-all hover:bg-red-500 cursor-pointer bg-red-600 rounded-lg">
+                        <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             </tr>

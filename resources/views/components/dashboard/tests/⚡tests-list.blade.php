@@ -145,14 +145,14 @@ new #[Layout('layouts::dashboard')] #[Title('لیست آزمون ها')] class e
                             <button
                                 class="bg-yellow-500  px-3 py-1 rounded hover:bg-yellow-600">
 
-                                ویرایش
+                                <i class="fa-solid fa-pen-to-square"></i>
 
                             </button>
 
                             <button wire:click="deleteExam({{ $exam->id }})"
                                 class="bg-red-500  px-3 py-1 rounded hover:bg-red-600">
 
-                                حذف
+                                <i class="fa-solid fa-trash"></i>
 
                             </button>
 
