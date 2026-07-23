@@ -44,12 +44,10 @@
     <div class="size-5 bg-[#a1a3a8] rounded-full mx-1 loading3"></div>
 </div>
 
-<div class="flex h-screen w-full overflow-hidden" >
+<div class="flex h-screen w-full overflow-hidden" x-data="{ modal:false }">
 
     <div class="w-[20%] overflow-y-auto overflow-x-hidden h-screen  text-white lg:block hidden" :class="dark ? 'bg-black' : 'bg-gray-900'">
-        <div class="size-[70px] m-auto my-4 rounded-full"><img class="rounded-full bg-cover" src="{{ asset('storage/logo/images.png') }}" alt=""></div>
-        <h3 class="text-center p-2">رضا محمدی</h3>
-        <button class="w-[120px] h-[35px] text-white bg-green-700 rounded-[5px] block mx-auto mb-[10px] cursor-pointer">ویرایش پروفایل</button>
+        @livewire('dashboard.user.show-profile')
         <button x-on:click="dark=!dark" class="block mx-auto text-xl font-bold cursor-pointer">
         <i :class="dark ? 'fa-solid fa-moon' : 'fa-solid fa-sun'" class="p-1"></i>
         </button>
@@ -153,10 +151,10 @@
         </div>
     </div >
 
+    @livewire('dashboard.user.edit-profile')
+
     <div x-show="open"  x-transition class="w-[100%] overflow-y-auto overflow-x-hidden text-white text-[12px]  md:text-[17px] lg:hidden md:block sm:block"  :class="dark ? 'bg-black' : 'bg-gray-900'">
-        <div class="size-[70px] m-auto my-4 rounded-full"><img class="rounded-full bg-cover" src="{{ asset('storage/logo/images.png') }}" alt=""></div>
-        <h3 class="text-center p-2">رضا محمدی</h3>
-        <button class="w-[120px] h-[35px] text-white bg-green-700 rounded-[5px] block mx-auto mb-[10px] cursor-pointer">ویرایش پروفایل</button>
+        @livewire('dashboard.user.show-profile')
         <button x-on:click="dark=!dark" class="block mx-auto text-xl font-bold cursor-pointer">
             <i :class="dark ? 'fa-solid fa-moon' : 'fa-solid fa-sun'" class="p-1"></i>
         </button>
