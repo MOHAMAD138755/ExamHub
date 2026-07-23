@@ -23,11 +23,17 @@ class User extends Authenticatable
         'email',
         'password',
         'image',
+        'is_admin',
     ];
 
     public function otpCode()
     {
         return $this->hasOne(OtpCode::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
     }
 
     /**
