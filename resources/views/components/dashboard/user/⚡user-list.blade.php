@@ -32,7 +32,7 @@ new #[Layout('layouts::dashboard')] #[Title('لیست کاربران')] class ex
 };
 ?>
 <div class="flex justify-center flex-col items-center h-[80%]"
-     :class="dark ? 'text-white' : 'text-black'"
+     :class="dark ? 'text-white'"
 >
 
     <h1 class="text-3xl pb-[40px]">لیست کاربران سایت</h1>
@@ -69,7 +69,7 @@ new #[Layout('layouts::dashboard')] #[Title('لیست کاربران')] class ex
             <th class="border-b border-gray-200 p-4 pt-0 pr-8 pb-3 text-center font-medium">عملیات</th>
         </tr>
         </thead>
-        <tbody class="bg-white dark:bg-gray-800">
+        <tbody>
         @forelse($this->users as $user)
             <tr>
                 <td class="border-b border-gray-100 p-4 pr-8 pb-3 pt-3 text-center">{{ $user->id }}</td>
