@@ -1,7 +1,11 @@
 <?php
 
 use App\Actions\Dashboard\CreateExamAction;
+use App\Actions\Dashboard\UpdateExamAction;
 use App\Http\Requests\AddTestRequest;
+use App\Models\Exam;
+use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
@@ -12,10 +16,21 @@ new class extends Component {
     public $status = 1;
     public $start_at;
     public $end_at;
+    public string $mode = 'create';
+    public $exam;
+    public $id;
 
-    public function rules(): array
+    public function rules()
     {
-        return (new AddTestRequest())->rules();
+        return [
+            'title' => ['required','string','max:40',Rule::unique('exams', 'title')->ignore($this->exam?->id)],
+            'description' => 'required|string|max:255',
+            'passing_score' => 'required|numeric|min:0|max:20',
+            'duration' => 'required|numeric|min:1',
+            'status' => 'required|in:0,1',
+            'start_at' => 'date|after:now',
+            'end_at' => 'date|after:start_at',
+        ];
     }
 
     public function messages(): array
@@ -59,28 +74,60 @@ new class extends Component {
         $this->validateOnly($property);
     }
 
-    public function createExam(CreateExamAction $createExamAction): void
+    #[On('exam-edit')]
+    public function edit($id)
+    {
+        $exam = Exam::findOrFail($id);
+
+        $this->mode = 'edit';
+
+        $this->id = $id;
+        $this->exam = $exam;
+        $this->title = $exam->title;
+        $this->description = $exam->description;
+        $this->duration = $exam->duration;
+        $this->passing_score = $exam->passing_score;
+        $this->status = $exam->status ? '1' : '0';
+
+        $this->start_at = optional($exam->start_at)?->format('Y-m-d\TH:i');
+        $this->end_at = optional($exam->end_at)?->format('Y-m-d\TH:i');
+
+        $this->dispatch('show-modal');
+    }
+
+    public function save(CreateExamAction $createExamAction, UpdateExamAction $updateExamAction): void
     {
         $this->validate();
-        $createExamAction->execute($this->title,$this->description,$this->duration,
-            $this->status,$this->passing_score,$this->start_at,$this->end_at);
+
+        if ($this->mode === 'create') {
+            $createExamAction->execute($this->title, $this->description, $this->duration,
+                $this->status, $this->passing_score, $this->start_at, $this->end_at);
+            $this->dispatch('create-exam');
+        } else {
+            $updateExamAction->execute($this->id, $this->title, $this->description, $this->duration,
+                $this->passing_score, $this->start_at, $this->end_at, $this->status);
+            session()->flash('success', 'با موفقیت ویرایش شد');
+            $this->dispatch('edit-exam');
+            $this->redirectRoute('dashboard.tests.list',navigate: true);
+        }
 
         $this->reset();
-        $this->dispatch('create-exam');
+        $this->dispatch('close-modal');
     }
 };
 ?>
 
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" x-show="test" x-transition x-on:create-exam.window="test=false">
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50" x-show="test" x-transition
+     x-on:close-modal.window="test=false" x-on:show-modal.window="test = true">
 
     <div :class="dark ? 'bg-gray-900' : 'bg-white'"
          class="w-full max-w-2xl h-[80%] rounded-xl shadow-lg p-8 overflow-y-auto">
 
         <h2 class="text-2xl font-bold text-center mb-8">
-            ایجاد آزمون جدید
+            {{ $this->mode === 'create' ? 'ایجاد آزمون جدید' : 'ویرایش آزمون' }}
         </h2>
 
-        <form wire:submit="createExam" class="space-y-5">
+        <form wire:submit="save" class="space-y-5">
 
 
             <div>
@@ -186,7 +233,7 @@ new class extends Component {
             <button type="submit"
                     class="w-full bg-blue-600 text-white rounded-lg py-3 hover:bg-blue-700 transition">
 
-                ایجاد آزمون
+                {{ $mode === 'create' ? 'ایجاد آزمون' : 'ویرایش آزمون' }}
 
             </button>
             <button x-on:click="test=false" type="button"

@@ -3,6 +3,7 @@
 use App\Models\Exam;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
@@ -10,24 +11,32 @@ use Livewire\WithPagination;
 
 new #[Layout('layouts::dashboard')] #[Title('لیست آزمون ها')] class extends Component {
     use WithPagination, WithoutUrlPagination;
+
     public $search;
 
     #[Computed]
     public function exams()
     {
-        return Exam::query()->when($this->search,function ($query){
-            $query->where('title','like',"%{$this->search}%")
-                ->orwhere('description','like',"%{$this->search}%")
-                ->orwhere('status','like',"%{$this->search}%");
+        return Exam::query()->when($this->search, function ($query) {
+            $query->where('title', 'like', "%{$this->search}%")
+                ->orwhere('description', 'like', "%{$this->search}%")
+                ->orwhere('status', 'like', "%{$this->search}%");
         })->latest()
             ->paginate(7);
+    }
+
+    #[On('create-exam')]
+    #[On('edit-exam')]
+    public function refreshExam()
+    {
+
     }
 
     public function deleteExam($id)
     {
         Exam::findOrFail($id)->delete();
 
-        session()->flash('success','با موفقیت حذف شد');
+        session()->flash('success', 'با موفقیت حذف شد');
         $this->resetPage();
     }
 };
@@ -44,9 +53,9 @@ new #[Layout('layouts::dashboard')] #[Title('لیست آزمون ها')] class e
         <div class="relative w-[350px]">
 
             <input wire:model.live.debounce.100ms="search"
-                type="text"
-                placeholder="جستجوی آزمون..."
-                class="w-full border border-gray-300 rounded-lg pr-10 pl-4 py-2 outline-none
+                   type="text"
+                   placeholder="جستجوی آزمون..."
+                   class="w-full border border-gray-300 rounded-lg pr-10 pl-4 py-2 outline-none
                focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
 
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +142,7 @@ new #[Layout('layouts::dashboard')] #[Title('لیست آزمون ها')] class e
                     <td class="p-3 text-center">
 
                     <span @class(['px-3 py-1 rounded-full text-xs','bg-green-500' => $exam->status==1,'bg-red-500' => $exam->status==0])>
-                        {{ $exam->status }}
+                        {{ $exam->status == 1 ? 'فعال' : 'غیر فعال'}}
                     </span>
 
                     </td>
@@ -143,6 +152,7 @@ new #[Layout('layouts::dashboard')] #[Title('لیست آزمون ها')] class e
                         <div class="flex justify-center gap-2">
 
                             <button
+                                wire:click="$dispatchTo('dashboard.tests.add-test', 'exam-edit', { id: @js($exam->id) })"
                                 class="bg-yellow-500  px-3 py-1 rounded hover:bg-yellow-600">
 
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -150,7 +160,7 @@ new #[Layout('layouts::dashboard')] #[Title('لیست آزمون ها')] class e
                             </button>
 
                             <button wire:click="deleteExam({{ $exam->id }})"
-                                class="bg-red-500  px-3 py-1 rounded hover:bg-red-600">
+                                    class="bg-red-500  px-3 py-1 rounded hover:bg-red-600">
 
                                 <i class="fa-solid fa-trash"></i>
 
