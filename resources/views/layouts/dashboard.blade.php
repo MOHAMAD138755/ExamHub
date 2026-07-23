@@ -44,7 +44,7 @@
     <div class="size-5 bg-[#a1a3a8] rounded-full mx-1 loading3"></div>
 </div>
 
-<div class="flex h-screen w-full overflow-hidden" x-data="{ modal:false }">
+<div class="flex h-screen w-full overflow-hidden" x-data="{ modal:false,test:false }">
 
     <div class="w-[20%] overflow-y-auto overflow-x-hidden h-screen  text-white lg:block hidden" :class="dark ? 'bg-black' : 'bg-gray-900'">
         @livewire('dashboard.user.show-profile')
@@ -94,9 +94,9 @@
                             لیست آزمون‌ها
                         </li>
 
-                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
+                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('dashboard.add_test') ? 'bg-blue-600 text-white' : '' }}">
                             <i class="fa-solid fa-circle-plus"></i>
-                            ایجاد آزمون
+                            <a wire:navigate x-on:click="test=true">افزودن آزمون</a>
                         </li>
 
                     </ul>
@@ -152,6 +152,7 @@
     </div >
 
     @livewire('dashboard.user.edit-profile')
+    @livewire('dashboard.tests.add-test')
 
     <div x-show="open"  x-transition class="w-[100%] overflow-y-auto overflow-x-hidden text-white text-[12px]  md:text-[17px] lg:hidden md:block sm:block"  :class="dark ? 'bg-black' : 'bg-gray-900'">
         @livewire('dashboard.user.show-profile')
