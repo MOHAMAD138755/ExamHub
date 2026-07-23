@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function (){
     Route::middleware(AdminCheck::class)->prefix('dashboard')->group(function (){
         Route::livewire('/', 'dashboard.index')->name('dashboard.index');
         Route::livewire('/users', 'dashboard.user.user-list')->name('dashboard.users');
-        Route::livewire('/tests', 'dashboard.tests.add-test')->name('dashboard.add_test');
+        Route::livewire('/tests', 'dashboard.tests.tests-list')->name('dashboard.tests.list');
     });
     Route::livewire('/logout', 'auth.logout')->name('logout');
 });

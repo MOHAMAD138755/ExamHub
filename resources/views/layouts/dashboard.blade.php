@@ -73,7 +73,7 @@
                     <button
                         @click="open = !open"
                         class="group flex items-center justify-between w-full rounded-xl px-4 py-3
-        transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600">
+        transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 {{ request()->routeIs('dashboard.tests.list') ? 'bg-blue-600 text-white' : '' }}">
 
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-file-circle-question"></i>
@@ -89,12 +89,13 @@
                         x-transition
                         class="mr-8 mt-2 space-y-2">
 
-                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
+                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg
+                        {{ request()->routeIs('dashboard.tests.list') ? 'bg-blue-600 text-white' : '' }}">
                             <i class="fa-solid fa-table-list"></i>
-                            لیست آزمون‌ها
+                            <a wire:navigate href="{{ route('dashboard.tests.list') }}">لیست آزمون ها</a>
                         </li>
 
-                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('dashboard.add_test') ? 'bg-blue-600 text-white' : '' }}">
+                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
                             <i class="fa-solid fa-circle-plus"></i>
                             <a wire:navigate x-on:click="test=true">افزودن آزمون</a>
                         </li>
@@ -199,12 +200,12 @@
 
                         <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
                             <i class="fa-solid fa-table-list"></i>
-                            لیست آزمون‌ها
+                            <a href="{{ route('dashboard.tests.list') }}">لیست آزمون ها</a>
                         </li>
 
                         <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
                             <i class="fa-solid fa-circle-plus"></i>
-                            ایجاد آزمون
+                            <a wire:navigate x-on:click="test=true">افزودن آزمون</a>
                         </li>
 
                     </ul>
