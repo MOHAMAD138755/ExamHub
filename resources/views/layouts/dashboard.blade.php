@@ -46,7 +46,7 @@
 
 <div class="flex h-screen w-full overflow-hidden" x-data="{ modal:false,test:false }">
 
-    <div class="w-[20%] overflow-y-auto overflow-x-hidden h-screen  text-white lg:block hidden" :class="dark ? 'bg-black' : 'bg-gray-900'">
+    <div class="w-[20%] overflow-y-auto scrollbar-none overflow-x-hidden h-screen  text-white lg:block hidden" :class="dark ? 'bg-black' : 'bg-gray-900'">
         @livewire('dashboard.user.show-profile')
         <button x-on:click="dark=!dark" class="block mx-auto text-xl font-bold cursor-pointer">
         <i :class="dark ? 'fa-solid fa-moon' : 'fa-solid fa-sun'" class="p-1"></i>
