@@ -3,8 +3,10 @@
 use App\Actions\Dashboard\CreateQuestionAction;
 use App\Actions\Dashboard\QuestionListAction;
 use App\Models\Exam;
+use App\Models\Question;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -27,7 +29,7 @@ new #[Layout('layouts::dashboard')] #[Title('افزودن سوال')] class exte
 
             'options' => ['required', 'array', 'size:4'],
 
-            'options.*' => ['required', 'string', 'max:255','distinct'],
+            'options.*' => ['required', 'string', 'max:255', 'distinct'],
 
         ];
     }
@@ -83,11 +85,22 @@ new #[Layout('layouts::dashboard')] #[Title('افزودن سوال')] class exte
         return resolve(QuestionListAction::class)
             ->execute($this->exam->id);
     }
+
+    public function delete($id)
+    {
+        Question::where('id', $id)->delete();
+        session()->flash('success', 'با موفقیت حذف شد');
+    }
+
+    #[On('close-question-modal')]
+    public function refreshQuestion()
+    {
+
+    }
 };
 ?>
-
 <div class="space-y-6" :class="dark ? 'bg-gray-900 text-white' : 'bg-white text-black'">
-
+    @livewire('dashboard.questions.edit-question')
     <h2 class="text-center text-2xl">عنوان آزمون: {{ $this->exam->title }}</h2>
 
     <div class=" rounded-xl shadow p-6">
@@ -186,100 +199,101 @@ new #[Layout('layouts::dashboard')] #[Title('افزودن سوال')] class exte
     </div>
 
 
-        <div class=" rounded-xl shadow p-6">
+    <div class=" rounded-xl shadow p-6">
 
-            <h2 class="text-xl font-bold mb-5">
-                لیست سوالات
-            </h2>
+        <h2 class="text-xl font-bold mb-5">
+            لیست سوالات
+        </h2>
 
-            <div class="overflow-x-auto">
+        <div class="overflow-x-auto">
 
-                <table class="min-w-full">
+            <table class="min-w-full">
 
-                    <thead>
+                <thead>
+
+                <tr class="border-b">
+
+                    <th class="text-right py-3">
+                        #
+                    </th>
+
+                    <th class="text-right py-3">
+                        سوال
+                    </th>
+
+
+                    <th class="text-right py-3">
+                        نمره
+                    </th>
+
+                    <th class="text-center py-3">
+                        عملیات
+                    </th>
+
+                </tr>
+
+                </thead>
+
+                <tbody x-data="{ question:false }">
+
+                @forelse($this->questions as $question)
 
                     <tr class="border-b">
 
-                        <th class="text-right py-3">
-                            #
-                        </th>
+                        <td class="py-3">
+                            {{ $question->id }}
+                        </td>
 
-                        <th class="text-right py-3">
-                            سوال
-                        </th>
+                        <td class="py-3">
+                            {{ $question->question_text }}
+                        </td>
 
+                        <td class="py-3">
+                            {{ $question->score }}
+                        </td>
 
-                        <th class="text-right py-3">
-                            نمره
-                        </th>
+                        <td class="py-3 text-center">
 
-                        <th class="text-center py-3">
-                            عملیات
-                        </th>
+                            <button
+                                wire:click="$dispatchTo('dashboard.questions.edit-question', 'question-edit', { id: @js($question->id) })"
+                                class="text-yellow-500 hover:text-yellow-600">
+
+                                <i class="fa-solid fa-pen"></i>
+
+                            </button>
+
+                            <button wire:click="delete({{ $question->id }})"
+                                    class="text-red-500 hover:text-red-600 ms-3">
+
+                                <i class="fa-solid fa-trash"></i>
+
+                            </button>
+
+                        </td>
 
                     </tr>
 
-                    </thead>
+                @empty
 
-                    <tbody>
+                    <tr>
 
-                    @forelse($this->questions as $question)
+                        <td colspan="4"
+                            class="text-center py-5 ">
 
-                        <tr class="border-b">
+                            سوالی ثبت نشده است.
 
-                            <td class="py-3">
-                                {{ $question->id }}
-                            </td>
+                        </td>
 
-                            <td class="py-3">
-                                {{ $question->question_text }}
-                            </td>
+                    </tr>
 
-                            <td class="py-3">
-                                {{ $question->score }}
-                            </td>
+                @endforelse
 
-                            <td class="py-3 text-center">
+                </tbody>
 
-                                <button
-                                    class="text-yellow-500 hover:text-yellow-600">
-
-                                    <i class="fa-solid fa-pen"></i>
-
-                                </button>
-
-                                <button
-                                    class="text-red-500 hover:text-red-600 ms-3">
-
-                                    <i class="fa-solid fa-trash"></i>
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                    @empty
-
-                        <tr>
-
-                            <td colspan="4"
-                                class="text-center py-5 ">
-
-                                سوالی ثبت نشده است.
-
-                            </td>
-
-                        </tr>
-
-                    @endforelse
-
-                    </tbody>
-
-                </table>
-
-            </div>
+            </table>
 
         </div>
+
+    </div>
 
 </div>

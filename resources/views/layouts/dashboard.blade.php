@@ -267,7 +267,7 @@
         <i class="fa-solid fa-bars text-2xl"></i>
     </button>
 
-    <div class="w-[80%] h-[650px]  scrollbar-none overflow-auto hid rounded-[5px] shadow-2xl m-10">{{ $slot }}</div>
+    <div class="w-[80%] h-[650px]  scrollbar-none overflow-auto hid rounded-[5px] shadow-2xl m-10" x-data="{ showQuestionModal:false }">{{ $slot }}</div>
 
 </div>
 
