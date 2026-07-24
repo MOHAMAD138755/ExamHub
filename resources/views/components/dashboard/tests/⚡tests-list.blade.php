@@ -166,6 +166,14 @@ new #[Layout('layouts::dashboard')] #[Title('لیست آزمون ها')] class e
 
                             </button>
 
+                            <a wire:navigate href="{{ route('dashboard.questions.list',['exam'=>$exam->id]) }}">
+                            <button
+                                    class="bg-green-500  px-3 py-1 rounded hover:bg-green-600">
+
+                                <i class="fa-solid fa-square-plus"></i>
+
+                            </button>
+                            </a>
                         </div>
 
                     </td>
