@@ -1,7 +1,9 @@
 <?php
 
 use App\Actions\Dashboard\CreateQuestionAction;
+use App\Actions\Dashboard\QuestionListAction;
 use App\Models\Exam;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -23,9 +25,9 @@ new #[Layout('layouts::dashboard')] #[Title('افزودن سوال')] class exte
 
             'correct_option' => ['required', 'integer', 'between:0,3'],
 
-            'options' => ['required', 'array', 'size:4', 'distinct'],
+            'options' => ['required', 'array', 'size:4'],
 
-            'options.*' => ['required', 'string', 'max:255'],
+            'options.*' => ['required', 'string', 'max:255','distinct'],
 
         ];
     }
@@ -46,7 +48,7 @@ new #[Layout('layouts::dashboard')] #[Title('افزودن سوال')] class exte
 
             'options.*.required' => 'تمام گزینه‌ها باید پر شوند.',
 
-            'options.distinct' => 'گزینه‌ها نباید تکراری باشند.',
+            'options.*.distinct' => 'گزینه‌ها نباید تکراری باشند.',
 
         ];
     }
@@ -59,19 +61,36 @@ new #[Layout('layouts::dashboard')] #[Title('افزودن سوال')] class exte
     public function save(CreateQuestionAction $createQuestionAction)
     {
         $this->validate();
-        $createQuestionAction->execute($this->question,$this->exam->id,$this->score,
-            $this->options,$this->correct_option);
-        session()->flash('success','با موفقیت اضافه شد');
+        $createQuestionAction->execute($this->question, $this->exam->id, $this->score,
+            $this->options, $this->correct_option);
+        session()->flash('success', 'با موفقیت اضافه شد');
 
-        $this->reset();
+        $this->reset([
+            'question',
+            'score',
+            'correct_option',
+            'options',
+        ]);
+
+        $this->score = 1;
+
+        $this->options = ['', '', '', ''];
+    }
+
+    #[Computed]
+    public function questions()
+    {
+        return resolve(QuestionListAction::class)
+            ->execute($this->exam->id);
     }
 };
 ?>
 
-<div class="space-y-6">
+<div class="space-y-6" :class="dark ? 'bg-gray-900 text-white' : 'bg-white text-black'">
 
+    <h2 class="text-center text-2xl">عنوان آزمون: {{ $this->exam->title }}</h2>
 
-    <div class=" rounded-xl shadow p-6" :class="dark ? 'bg-gray-900 text-white' : 'bg-white text-black'">
+    <div class=" rounded-xl shadow p-6">
 
         <h2 class="text-xl font-bold mb-5">
             افزودن سوال
@@ -159,7 +178,7 @@ new #[Layout('layouts::dashboard')] #[Title('افزودن سوال')] class exte
             </a>
 
             @if(session()->has('success'))
-                    <p class="text-center text-green-600 p-4">{{ session('success') }}</p>
+                <p class="text-center text-green-600 p-4">{{ session('success') }}</p>
             @endif
 
         </form>
@@ -167,99 +186,100 @@ new #[Layout('layouts::dashboard')] #[Title('افزودن سوال')] class exte
     </div>
 
 
-    {{--    <div class="bg-white rounded-xl shadow p-6">--}}
+        <div class=" rounded-xl shadow p-6">
 
-    {{--        <h2 class="text-xl font-bold mb-5">--}}
-    {{--            لیست سوالات--}}
-    {{--        </h2>--}}
+            <h2 class="text-xl font-bold mb-5">
+                لیست سوالات
+            </h2>
 
-    {{--        <div class="overflow-x-auto">--}}
+            <div class="overflow-x-auto">
 
-    {{--            <table class="min-w-full">--}}
+                <table class="min-w-full">
 
-    {{--                <thead>--}}
+                    <thead>
 
-    {{--                <tr class="border-b">--}}
+                    <tr class="border-b">
 
-    {{--                    <th class="text-right py-3">--}}
-    {{--                        #--}}
-    {{--                    </th>--}}
+                        <th class="text-right py-3">
+                            #
+                        </th>
 
-    {{--                    <th class="text-right py-3">--}}
-    {{--                        سوال--}}
-    {{--                    </th>--}}
+                        <th class="text-right py-3">
+                            سوال
+                        </th>
 
-    {{--                    <th class="text-right py-3">--}}
-    {{--                        نمره--}}
-    {{--                    </th>--}}
 
-    {{--                    <th class="text-center py-3">--}}
-    {{--                        عملیات--}}
-    {{--                    </th>--}}
+                        <th class="text-right py-3">
+                            نمره
+                        </th>
 
-    {{--                </tr>--}}
+                        <th class="text-center py-3">
+                            عملیات
+                        </th>
 
-    {{--                </thead>--}}
+                    </tr>
 
-    {{--                <tbody>--}}
+                    </thead>
 
-    {{--                @forelse($questions as $question)--}}
+                    <tbody>
 
-    {{--                    <tr class="border-b">--}}
+                    @forelse($this->questions as $question)
 
-    {{--                        <td class="py-3">--}}
-    {{--                            {{ $loop->iteration }}--}}
-    {{--                        </td>--}}
+                        <tr class="border-b">
 
-    {{--                        <td class="py-3">--}}
-    {{--                            {{ $question->question }}--}}
-    {{--                        </td>--}}
+                            <td class="py-3">
+                                {{ $question->id }}
+                            </td>
 
-    {{--                        <td class="py-3">--}}
-    {{--                            {{ $question->score }}--}}
-    {{--                        </td>--}}
+                            <td class="py-3">
+                                {{ $question->question_text }}
+                            </td>
 
-    {{--                        <td class="py-3 text-center">--}}
+                            <td class="py-3">
+                                {{ $question->score }}
+                            </td>
 
-    {{--                            <button--}}
-    {{--                                class="text-yellow-500 hover:text-yellow-600">--}}
+                            <td class="py-3 text-center">
 
-    {{--                                <i class="fa-solid fa-pen"></i>--}}
+                                <button
+                                    class="text-yellow-500 hover:text-yellow-600">
 
-    {{--                            </button>--}}
+                                    <i class="fa-solid fa-pen"></i>
 
-    {{--                            <button--}}
-    {{--                                class="text-red-500 hover:text-red-600 ms-3">--}}
+                                </button>
 
-    {{--                                <i class="fa-solid fa-trash"></i>--}}
+                                <button
+                                    class="text-red-500 hover:text-red-600 ms-3">
 
-    {{--                            </button>--}}
+                                    <i class="fa-solid fa-trash"></i>
 
-    {{--                        </td>--}}
+                                </button>
 
-    {{--                    </tr>--}}
+                            </td>
 
-    {{--                @empty--}}
+                        </tr>
 
-    {{--                    <tr>--}}
+                    @empty
 
-    {{--                        <td colspan="4"--}}
-    {{--                            class="text-center py-5 text-gray-500">--}}
+                        <tr>
 
-    {{--                            سوالی ثبت نشده است.--}}
+                            <td colspan="4"
+                                class="text-center py-5 ">
 
-    {{--                        </td>--}}
+                                سوالی ثبت نشده است.
 
-    {{--                    </tr>--}}
+                            </td>
 
-    {{--                @endforelse--}}
+                        </tr>
 
-    {{--                </tbody>--}}
+                    @endforelse
 
-    {{--            </table>--}}
+                    </tbody>
 
-    {{--        </div>--}}
+                </table>
 
-    {{--    </div>--}}
+            </div>
+
+        </div>
 
 </div>
