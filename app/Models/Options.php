@@ -9,4 +9,9 @@ class Options extends Model
     protected $fillable = [
         'id','question_id','is_correct','option_text'
     ];
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 }

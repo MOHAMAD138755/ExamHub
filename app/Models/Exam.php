@@ -20,6 +20,11 @@ class Exam extends Model
         'end_at',
     ];
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
     protected function casts(): array
     {
         return [
