@@ -111,41 +111,6 @@
                     <a wire:navigate href="{{ route('dashboard.questions.bank') }}">بانک سوالات</a>
                 </li>
 
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-square-poll-vertical text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>نتایج</span>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-chart-line text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>تحلیل‌ها</span>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-clock-rotate-left text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>گزارش فعالیت‌ها</span>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-bell text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>اعلان‌ها</span>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-gear text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>تنظیمات</span>
-                </li>
-
                 @livewire('auth.logout')
 
             </ul>
@@ -218,41 +183,6 @@
 
                     <i class="fa-solid fa-list-check text-gray-500 transition-all duration-300 group-hover:text-white"></i>
                     <a wire:navigate href="{{ route('dashboard.questions.bank') }}">بانک سوالات</a>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-square-poll-vertical text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>نتایج</span>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-chart-line text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>تحلیل‌ها</span>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-clock-rotate-left text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>گزارش فعالیت‌ها</span>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-bell text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>اعلان‌ها</span>
-                </li>
-
-                <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
-
-                    <i class="fa-solid fa-gear text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>تنظیمات</span>
                 </li>
 
                 @livewire('auth.logout')

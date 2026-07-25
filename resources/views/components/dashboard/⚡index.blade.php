@@ -86,23 +86,6 @@ new #[Layout('layouts::dashboard')] #[Title('داشبورد ادمین')] class 
     <div class="w-full flex flex-wrap justify-around items-center">
 
         <div class="my-10">
-            <h2 class="font-semibold p-2 text-lg text-right">آخرین فعالیت ها</h2>
-            <hr class="border-2 w-[250px] border-yellow-300">
-            <div class="flex">
-                <i class="fa-solid fa-user-plus p-5 text-green-400"></i>
-                <p class="p-3 italic">کاربر جدید ثبت نام کرد</p>
-            </div>
-            <div class="flex">
-                <i class="fa-solid fa-file-circle-plus p-5 text-blue-400"></i>
-                <p class="p-3 italic">آزمون php ایجاد شد</p>
-            </div>
-            <div class="flex">
-                <i class="fa-solid fa-trash p-5 text-red-400"></i>
-                <p class="p-3 italic">آزمون حذف شد</p>
-            </div>
-        </div>
-
-        <div class="my-10">
             <h2 class="font-semibold p-2 text-lg text-right">آخرین کاربران </h2>
             <hr class="border-2 w-[250px] border-b-violet-700">
             <div class="flex">
@@ -121,7 +104,10 @@ new #[Layout('layouts::dashboard')] #[Title('داشبورد ادمین')] class 
             <hr class="border-2 w-[250px] border-b-blue-500">
             <div class="flex flex-col">
                 @forelse($this->lastestExams as $exam)
+                    <div class="flex">
                 <p class="p-3 italic">{{ $exam->title }}</p>
+                    <p class="p-3 italic">{{ $exam->created_at }}</p>
+                    </div>
                 @empty
                     <p class="text-green-400">آزمونی موجود نیست</p>
                 @endforelse
