@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function (){
         Route::livewire('/users', 'dashboard.user.user-list')->name('dashboard.users');
         Route::livewire('/tests', 'dashboard.tests.tests-list')->name('dashboard.tests.list');
         Route::livewire('tests/{exam}/questions', 'dashboard.questions.questions-list')->name('dashboard.questions.list');
+        Route::livewire('/question-bank', 'dashboard.questions.bank-list')->name('dashboard.questions.bank');
     });
     Route::livewire('/logout', 'auth.logout')->name('logout');
 });

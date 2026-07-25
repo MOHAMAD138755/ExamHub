@@ -105,10 +105,10 @@
                 </li>
 
                 <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
+        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('dashboard.questions.bank') ? 'bg-blue-600 text-white' : '' }}">
 
                     <i class="fa-solid fa-list-check text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>بانک سوالات</span>
+                    <a wire:navigate href="{{ route('dashboard.questions.bank') }}">بانک سوالات</a>
                 </li>
 
                 <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
@@ -198,9 +198,10 @@
                         x-transition
                         class="mr-8 mt-2 space-y-2">
 
-                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
+                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg"
+                            {{ request()->routeIs('dashboard.tests.list') ? 'bg-blue-600 text-white' : '' }}>
                             <i class="fa-solid fa-table-list"></i>
-                            <a href="{{ route('dashboard.tests.list') }}">لیست آزمون ها</a>
+                            <a wire:navigate href="{{ route('dashboard.tests.list') }}">لیست آزمون ها</a>
                         </li>
 
                         <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
@@ -213,10 +214,10 @@
                 </li>
 
                 <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
-        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('') ? 'bg-blue-600 text-white' : '' }}">
+        hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg {{ request()->routeIs('dashboard.questions.bank') ? 'bg-blue-600 text-white' : '' }}">
 
                     <i class="fa-solid fa-list-check text-gray-500 transition-all duration-300 group-hover:text-white"></i>
-                    <span>بانک سوالات</span>
+                    <a wire:navigate href="{{ route('dashboard.questions.bank') }}">بانک سوالات</a>
                 </li>
 
                 <li class="group flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 cursor-pointer
