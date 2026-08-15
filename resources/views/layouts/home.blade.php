@@ -42,10 +42,11 @@
                             </span>
                 <ul class="hidden absolute top-full border border-gray-200 group-hover:block w-[150px] dark:bg-black  bg-white shadow-2xl rounded-md cursor-pointer">
                     @auth
-                    <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">همه ی آزمون ها</a></li>
+                    <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="{{ route('exams.list') }}">همه ی آزمون ها</a></li>
                     <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">آزمون های من</a></li>
                     @endauth
-                    <li class="py-3 px-2 hover:text-green-400 transition-all">سفارش آنلاین غذا</li>
+                        <li class="py-3 px-2 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('home') }}">صفحه اصلی</a>
+                        </li>
                     <li class="py-3 px-2 hover:text-green-400 transition-all">سوپرمارکت آنلاین</li>
                     <li class="py-3 px-2 hover:text-green-400 transition-all">درخواست تاکسی</li>
                     <li class="py-3 px-2 hover:text-green-400 transition-all">پیک موتوری</li>
@@ -59,7 +60,9 @@
             @auth
             <li class=" cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('user_logout') }}">خروج</a></li>
             @endauth
-            <li class=" cursor-pointer hover:text-green-400 transition-all">پنل سازمانی</li>
+            @if(auth()->user()->is_admin == 1)
+            <li class=" cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('dashboard.index') }}">پنل مدیریت</a></li>
+            @endif
             <li class=" cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>
             <li class=" cursor-pointer hover:text-green-400 transition-all mode">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -99,10 +102,10 @@
                 </div>
                 <ul id="show-box" class="hidden">
                     @auth
-                        <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">همه ی آزمون ها</a></li>
+                        <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="{{ route('exams.list') }}">همه ی آزمون ها</a></li>
                         <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">آزمون های من</a></li>
                     @endauth
-                    <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">اسنپ پی (سرویس اعتباری)
+                    <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('home') }}">صفحه اصلی</a>
                     </li>
                     <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">رزرو بلیط قطار</li>
                 </ul>
@@ -113,7 +116,9 @@
             @auth
                 <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('user_logout') }}">خروج</a></li>
             @endauth
-            <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">پنل سازمانی</li>
+            @if(auth()->user()->is_admin == 1)
+                <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('dashboard.index') }}">پنل مدیریت</a></li>
+            @endif
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">پنل سازمانی</li>
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>

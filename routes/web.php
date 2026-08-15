@@ -6,6 +6,7 @@ use App\Http\Controllers\LogoutController;
 
 Route::prefix('/')->group(function () {
     Route::livewire('/', 'home.home-page')->name('home');
+    Route::livewire('/exams', 'exams.exam-list')->name('exams.list');
     Route::get('/user-logout', [LogoutController::class,'logout'])->name('user_logout');
 });
 
