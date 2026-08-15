@@ -3,8 +3,8 @@
 use App\Http\Middleware\AdminCheck;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('/')->group(function () {
+    Route::livewire('/', 'home.home-page')->name('home');
 });
 
 Route::middleware('guest')->group(function (){
