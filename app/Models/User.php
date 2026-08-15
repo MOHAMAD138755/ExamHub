@@ -26,6 +26,13 @@ class User extends Authenticatable
         'is_admin',
     ];
 
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class)
+            ->withPivot('score')
+            ->withTimestamps();
+    }
+
     public function otpCode()
     {
         return $this->hasOne(OtpCode::class);
