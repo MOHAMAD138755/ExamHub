@@ -51,7 +51,11 @@ new #[Layout('layouts::auth')] #[Title('تایید کد ورود')] class extend
 
             Auth::login($user, true);
 
-            $this->redirectRoute('dashboard.index', navigate: true);
+            if($user->is_admin == 1) {
+                $this->redirectRoute('dashboard.index', navigate: true);
+            }else {
+                $this->redirectRoute('home', navigate: true);
+            }
 
         } catch (Exception $exception) {
             $this->addError('code', $exception->getMessage());

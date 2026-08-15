@@ -8,7 +8,7 @@ new class extends Component {
     {
         $logoutUserAction->execute();
 
-        $this->redirect('/',navigate: true);
+        $this->redirectRoute('home',navigate: true);
     }
 };
 ?>

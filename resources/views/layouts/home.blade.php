@@ -202,19 +202,19 @@
             }
         })
 
-        window.addEventListener('load', function () {
-            let loading = document.getElementById('loading');
-            setTimeout(function () {
+        const loading = document.getElementById('loading')
+
+        if (loading) {
+            setTimeout(() => {
                 loading.classList.remove('opacity-100')
                 loading.classList.add('opacity-0')
 
-                setTimeout(function () {
+                setTimeout(() => {
                     loading.classList.remove('flex')
                     loading.classList.add('hidden')
                 }, 1000)
-
             }, 2000)
-        })
+        }
 
         let moons = document.querySelectorAll('.moon')
         let suns = document.querySelectorAll('.sun')
