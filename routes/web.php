@@ -2,9 +2,11 @@
 
 use App\Http\Middleware\AdminCheck;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LogoutController;
 
 Route::prefix('/')->group(function () {
     Route::livewire('/', 'home.home-page')->name('home');
+    Route::get('/user-logout', [LogoutController::class,'logout'])->name('user_logout');
 });
 
 Route::middleware('guest')->group(function (){

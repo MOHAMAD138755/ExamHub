@@ -32,7 +32,7 @@
              alt="logo">
         <ul class="flex justify-start items-center lg:gap-8 gap-5 lg:text-[15px] text-xs dark:text-white text-gray-700 whitespace-nowrap">
             <li class="pr-5 relative group transition-all cursor-default">
-                        <span class="flex items-center gap-1 py-3">سوپراپ اسنپ
+                        <span class="flex items-center gap-1 py-3">آزمون ها
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class=" w-4 h-4 transition-transform group-hover:rotate-180 font-bold mt-2 mx-1 bi bi-chevron-down"
                              viewBox="0 0 16 16">
@@ -41,8 +41,10 @@
                         </svg>
                             </span>
                 <ul class="hidden absolute top-full border border-gray-200 group-hover:block w-[150px] dark:bg-black  bg-white shadow-2xl rounded-md cursor-pointer">
-                    <li class="py-3 px-2 hover:text-green-400 transition-all">درخواست تاکسی</li>
-                    <li class="py-3 px-2 hover:text-green-400 transition-all">پیک موتوری</li>
+                    @auth
+                    <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">همه ی آزمون ها</a></li>
+                    <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">آزمون های من</a></li>
+                    @endauth
                     <li class="py-3 px-2 hover:text-green-400 transition-all">سفارش آنلاین غذا</li>
                     <li class="py-3 px-2 hover:text-green-400 transition-all">سوپرمارکت آنلاین</li>
                     <li class="py-3 px-2 hover:text-green-400 transition-all">درخواست تاکسی</li>
@@ -51,8 +53,12 @@
                     <li class="py-3 px-2 hover:text-green-400 transition-all">سوپرمارکت آنلاین</li>
                 </ul>
             </li>
-            <li class=" cursor-pointer hover:text-green-400 transition-all">ثبت نام راننده اسنپ</li>
-            <li class=" cursor-pointer hover:text-green-400 transition-all">اسنپ پی (سرویس اعتباری)</li>
+            @guest
+            <li class=" cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('login') }}">ثبت نام و ورود</a></li>
+            @endguest
+            @auth
+            <li class=" cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('user_logout') }}">خروج</a></li>
+            @endauth
             <li class=" cursor-pointer hover:text-green-400 transition-all">پنل سازمانی</li>
             <li class=" cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>
             <li class=" cursor-pointer hover:text-green-400 transition-all mode">
@@ -81,7 +87,7 @@
         </svg>
         <ul class="flex flex-col">
             <li class="border-b border-gray-100">
-                <div id="open"
+                <div id="open-box-menu"
                      class="flex justify-between items-center p-4 cursor-pointer dark:hover:bg-gray-500 hover:bg-gray-50 transition-all">
                     <span class="font-medium dark:text-white text-gray-800">سوپراپ اسنپ</span>
                     <svg id="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -92,20 +98,26 @@
                     </svg>
                 </div>
                 <ul id="show-box" class="hidden">
-                    <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">رزرو بلیط قطار</li>
-                    <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">پنل سازمانی</li>
+                    @auth
+                        <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">همه ی آزمون ها</a></li>
+                        <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">آزمون های من</a></li>
+                    @endauth
                     <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">اسنپ پی (سرویس اعتباری)
                     </li>
                     <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">رزرو بلیط قطار</li>
                 </ul>
             </li>
-            <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">ثبت نام راننده اسنپ</li>
-            <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">اسنپ پی (سرویس اعتباری)</li>
+            @guest
+                <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('login') }}">ثبت نام و ورود</a></li>
+            @endguest
+            @auth
+                <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('user_logout') }}">خروج</a></li>
+            @endauth
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">پنل سازمانی</li>
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">پنل سازمانی</li>
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>
-            <li class="mr-10 my-3 cursor-pointer hover:text-green-400 transition-all mode" onclick="ChangeMode()">
+            <li class="mr-10 my-3 cursor-pointer hover:text-green-400 transition-all mode">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                      class="bi bi-moon-stars-fill moon" viewBox="0 0 16 16">
                     <path
@@ -154,97 +166,88 @@
 </div>
 @livewireScripts
 <script type="text/javascript">
-    let hamber = document.getElementById('hamber_menu')
-    let toggle = document.getElementById('toggle')
-    let close = document.getElementById('close')
-    let open = document.getElementById('open')
-    let show_box = document.getElementById('show-box')
-    let icon = document.getElementById('icon')
+    (function () {
+        let hamber = document.getElementById('hamber_menu')
+        let toggle = document.getElementById('toggle')
+        let close = document.getElementById('close')
+        let open = document.getElementById('open-box-menu')
+        let show_box = document.getElementById('show-box')
+        let icon = document.getElementById('icon')
 
-    hamber.addEventListener('click', function () {
-        if (toggle.classList.contains('hidden')) {
-            toggle.classList.remove('hidden')
-            toggle.classList.add('flex')
-        } else {
+        hamber.addEventListener('click', function () {
+            if (toggle.classList.contains('hidden')) {
+                toggle.classList.remove('hidden')
+                toggle.classList.add('flex')
+            } else {
+                toggle.classList.remove('flex')
+                toggle.classList.add('hidden')
+            }
+        })
+
+        close.addEventListener('click', function () {
             toggle.classList.remove('flex')
             toggle.classList.add('hidden')
-        }
-    })
+        })
 
-    close.addEventListener('click', function () {
-        toggle.classList.remove('flex')
-        toggle.classList.add('hidden')
-    })
+        open.addEventListener('click', function () {
+            if (show_box.classList.contains('hidden')) {
+                show_box.classList.remove('hidden')
+                show_box.classList.add('block')
+                icon.classList.add('rotate-180')
+            } else {
+                show_box.classList.remove('block')
+                show_box.classList.add('hidden')
+                icon.classList.remove('rotate-180')
+                icon.classList.add('rotate-0')
+            }
+        })
 
-    open.addEventListener('click', function () {
-        if (show_box.classList.contains('hidden')) {
-            show_box.classList.remove('hidden')
-            show_box.classList.add('block')
-            icon.classList.add('rotate-180')
-        } else {
-            show_box.classList.remove('block')
-            show_box.classList.add('hidden')
-            icon.classList.remove('rotate-180')
-            icon.classList.add('rotate-0')
-        }
-    })
-
-    window.addEventListener('load', function () {
-        let loading = document.getElementById('loading');
-        setTimeout(function () {
-            loading.classList.remove('opacity-100')
-            loading.classList.add('opacity-0')
-
+        window.addEventListener('load', function () {
+            let loading = document.getElementById('loading');
             setTimeout(function () {
-                loading.classList.remove('flex')
-                loading.classList.add('hidden')
-            }, 1000)
+                loading.classList.remove('opacity-100')
+                loading.classList.add('opacity-0')
 
-        }, 2000)
-    })
+                setTimeout(function () {
+                    loading.classList.remove('flex')
+                    loading.classList.add('hidden')
+                }, 1000)
 
-    let moon = document.querySelector('.moon')
-    let sun = document.querySelector('.sun')
+            }, 2000)
+        })
 
-    if(localStorage.getItem('theme') === "dark"){
-        document.documentElement.classList.add('dark')
-        moon.classList.remove('hidden')
-        moon.classList.add('block')
+        let moons = document.querySelectorAll('.moon')
+        let suns = document.querySelectorAll('.sun')
 
-        sun.classList.remove('block')
-        sun.classList.add('hidden')
-    }else{
-        sun.classList.remove('hidden');
-        sun.classList.add('block');
-
-        moon.classList.remove('block');
-        moon.classList.add('hidden');
-        document.documentElement.classList.remove('dark')
-    }
-
-    let ChangeMode = function () {
-        if(moon.classList.contains('hidden')){
-            moon.classList.remove('hidden')
-            moon.classList.add('block')
-
-            sun.classList.remove('block')
-            sun.classList.add('hidden')
-
-            document.documentElement.classList.add('dark')
-            localStorage.setItem('theme','dark')
-        }else{
-            sun.classList.remove('hidden');
-            sun.classList.add('block');
-
-            moon.classList.remove('block');
-            moon.classList.add('hidden');
-
-            document.documentElement.classList.remove('dark')
-            localStorage.setItem('theme','light')
+        function updateIcon(isDark) {
+            moons.forEach(
+                (moon)=>{
+                    moon.classList.toggle('hidden',!isDark)
+                    moon.classList.toggle('block',isDark)
+                }
+            )
+            suns.forEach(
+                (sun)=>{
+                    sun.classList.toggle('hidden',isDark)
+                    sun.classList.toggle('block',!isDark)
+                }
+            )
         }
-    }
-    document.querySelector('.mode').addEventListener('click',ChangeMode)
 
+        let isDark = localStorage.getItem('theme') === "dark"
+        document.documentElement.classList.toggle('dark',isDark)
+
+        function ChangeMode() {
+            isDark = !document.documentElement.classList.contains('dark');
+            document.documentElement.classList.toggle('dark', isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateIcon(isDark)
+        }
+        document.querySelectorAll('.mode').forEach((item)=>{
+            item.addEventListener('click',ChangeMode)
+        })
+
+    })()
 </script>
 </body>
 </html>
