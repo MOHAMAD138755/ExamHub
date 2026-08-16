@@ -40,10 +40,10 @@
                                   d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/>
                         </svg>
                             </span>
-                <ul class="hidden absolute top-full border border-gray-200 group-hover:block w-[150px] dark:bg-black  bg-white shadow-2xl rounded-md cursor-pointer">
+                <ul class="hidden absolute top-full z-[100] border border-gray-200 group-hover:block w-[150px] dark:bg-black  bg-white shadow-2xl rounded-md cursor-pointer">
                     @auth
                     <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="{{ route('exams.list') }}">همه ی آزمون ها</a></li>
-                    <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">آزمون های من</a></li>
+                    <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="{{ route('exams.my-exams') }}">آزمون های من</a></li>
                     @endauth
                         <li class="py-3 px-2 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('home') }}">صفحه اصلی</a>
                         </li>
@@ -102,8 +102,8 @@
                 </div>
                 <ul id="show-box" class="hidden">
                     @auth
-                        <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="{{ route('exams.list') }}">همه ی آزمون ها</a></li>
-                        <li class="py-3 px-2 hover:text-green-400 transition-all"><a wire:navigate href="#">آزمون های من</a></li>
+                        <li class="mr-5 my-3  hover:text-green-400 transition-all"><a wire:navigate href="{{ route('exams.list') }}">همه ی آزمون ها</a></li>
+                        <li class="mr-5 my-3  hover:text-green-400 transition-all"><a wire:navigate href="{{ route('exams.my-exams') }}">آزمون های من</a></li>
                     @endauth
                     <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('home') }}">صفحه اصلی</a>
                     </li>
