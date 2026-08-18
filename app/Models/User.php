@@ -29,7 +29,7 @@ class User extends Authenticatable
     public function exams()
     {
         return $this->belongsToMany(Exam::class)
-            ->withPivot('score')
+            ->withPivot('score','started_at','submitted_at')
             ->withTimestamps();
     }
 

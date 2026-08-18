@@ -9,6 +9,7 @@ Route::prefix('/')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::livewire('/exams', 'exams.exam-list')->name('exams.list');
         Route::livewire('/exams/my-exams', 'exams.my-exams')->name('exams.my-exams');
+        Route::livewire('/exams/{exam:slug}/question', 'exams.my-questions')->name('exams.my-questions');
         Route::get('/user-logout', [LogoutController::class,'logout'])->name('user_logout');
     });
 });
