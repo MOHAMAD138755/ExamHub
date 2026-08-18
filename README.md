@@ -1,59 +1,329 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 ExamHub
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> A modern online examination platform built with Laravel and Livewire, focused on a smooth user experience, responsive UI, secure exam timing, automatic submission, and backend-based exam evaluation.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📸 Screenshots
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Homepage
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+![ExamHub Homepage](ScreenShot/Home.png)
 
-## Learning Laravel
+### Exams Dashboard
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+![Exams List](ScreenShot/Dashboard.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Users List
 
-## Laravel Sponsors
+![Users List](ScreenShot/users.png)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Exam List
 
-### Premium Partners
+![Exam Result](ScreenShot/exam-list.png)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+> Replace the image paths above with your actual screenshots.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🎥 Demo
 
-## Code of Conduct
+[▶️ Watch the Demo](YOUR_DEMO_VIDEO_LINK)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+The demo shows the main application flow, including browsing exams, registration, starting an exam, answering questions, timer handling, submission, and displaying the final result.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ✨ Features
 
-## License
+### 🎨 UI & User Experience
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* Fully responsive design
+* Mobile, tablet, and desktop support
+* Dark mode
+* Loading states
+* Button click animations
+* Interactive navigation menus
+* Responsive slider
+* Manual slider controls
+* Auto-play slider
+* Touch / swipe support
+* Smooth interactions without unnecessary page refreshes
+
+### 👤 Authentication
+
+* User registration
+* User login
+* Secure logout
+* Session management
+* Authentication-based access control
+
+### 📝 Exam System
+
+* Browse all available exams
+* Register for an exam
+* "My Exams" section
+* Start an exam
+* Display questions and options
+* Navigate between questions
+* Store submitted answers
+* Exam countdown timer
+* Manual exam submission
+* Automatic submission when the exam time expires
+
+### ⏱️ Secure Exam Timing
+
+The exam timer is not trusted as the source of truth.
+
+The client-side timer is mainly responsible for displaying the remaining time, while Laravel validates the actual exam timing on the backend.
+
+If a user:
+
+* Manipulates the client-side timer
+* Refreshes the page
+* Closes the browser
+* Reopens the browser
+* Leaves an exam unfinished
+
+the backend can still determine whether the exam has expired.
+
+Started but unsubmitted exams are checked using the **Laravel Scheduler** and can be automatically submitted and evaluated after their allowed time has expired.
+
+### ✅ Automatic Exam Evaluation
+
+After submission, the system:
+
+1. Retrieves the exam questions.
+2. Checks the user's selected answers.
+3. Compares each answer with the correct option.
+4. Calculates the number of correct answers.
+5. Calculates the final score.
+6. Stores the score in the database.
+
+The final score is calculated on a 20-point scale:
+
+```text
+Score = (Correct Answers / Total Questions) × 20
+```
+
+### 🗄️ Database & Eloquent
+
+* Eloquent ORM
+* Model relationships
+* Many-to-Many relationships
+* Pivot tables
+* Foreign keys
+* Cascade deletes
+* Database migrations
+* Duplicate registration prevention
+* Score storage
+
+---
+
+## 🛠️ Technologies
+
+### Backend
+
+* PHP
+* Laravel
+* Laravel Livewire
+* Eloquent ORM
+* Laravel Scheduler
+* Blade
+
+### Frontend
+
+* HTML5
+* CSS3
+* Tailwind CSS
+* JavaScript
+
+### Database
+
+* MySQL
+
+### Development Tools
+
+* Git
+* GitHub
+* Composer
+* NPM
+* Vite
+
+---
+
+## 🏗️ Application Flow
+
+```text
+User
+ │
+ ├── Register / Login
+ │
+ └── Browse Exams
+        │
+        ├── Register for Exam
+        │
+        └── Start Exam
+               │
+               ├── Questions
+               ├── Options
+               ├── Answers
+               ├── Countdown Timer
+               │
+               └── Submit
+                      │
+                      ├── Evaluate Answers
+                      ├── Calculate Score
+                      └── Store Result
+```
+
+Expired and unfinished exams are also checked by the Laravel Scheduler.
+
+---
+
+## 🔐 Backend Validation
+
+Important exam-related logic is handled on the backend instead of relying only on JavaScript.
+
+The server validates the exam state and timing before accepting the final submission.
+
+This prevents users from bypassing the exam time simply by manipulating the client-side timer.
+
+---
+
+## ⚡ Livewire
+
+Livewire is used for interactive parts of the application, including:
+
+* Dynamic UI interactions
+* Modals
+* Exam interactions
+* Question navigation
+* Events
+* State management
+* Submission handling
+
+The application can provide SPA-like interactions while keeping the Laravel backend and Livewire architecture.
+
+---
+
+## 📁 Project Structure
+
+```text
+app/
+├── Http/
+├── Livewire/
+├── Models/
+└── ...
+
+database/
+└── migrations/
+
+resources/
+├── views/
+└── ...
+
+routes/
+└── web.php
+```
+
+---
+
+## 🚀 Installation
+
+Clone the repository:
+
+```bash
+git clone YOUR_REPOSITORY_URL
+cd ExamHub
+```
+
+Install PHP dependencies:
+
+```bash
+composer install
+```
+
+Create the environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+Configure your database in `.env`.
+
+Run migrations:
+
+```bash
+php artisan migrate
+```
+
+Install frontend dependencies:
+
+```bash
+npm install
+```
+
+Build frontend assets:
+
+```bash
+npm run build
+```
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+---
+
+## ⏰ Scheduler
+
+Exam expiration is handled using Laravel Scheduler.
+
+For production environments, configure a system Cron job to execute the Laravel scheduler regularly.
+
+---
+
+## 📌 Project Status
+
+**Completed ✅**
+
+ExamHub was built as a real-world Laravel project to practice and implement the complete lifecycle of an online examination system — from authentication and exam registration to timed exam sessions, answer submission, automatic evaluation, and score calculation.
+
+---
+
+## 🎯 Project Goals
+
+The main goal of ExamHub was not only to build a functional application, but also to improve practical skills in:
+
+* Laravel development
+* Livewire
+* Eloquent relationships
+* Database design
+* Backend validation
+* Exam logic
+* JavaScript interactions
+* Responsive UI development
+* Tailwind CSS
+* Scheduler and automated backend tasks
+* Building a complete web application
+
+---
+
+## 👨‍💻 Developer
+
+**Mohammad Torki**
+
+PHP / Laravel Backend Developer
+Frontend & UI Enthusiast
+
+* GitHub: **https://github.com/MOHAMAD138755**
+* Repository: **https://github.com/MOHAMAD138755/ExamHub**

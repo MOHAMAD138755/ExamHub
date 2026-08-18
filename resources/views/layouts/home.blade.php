@@ -59,10 +59,10 @@
             @endguest
             @auth
             <li class=" cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('user_logout') }}">خروج</a></li>
-            @endauth
-            @if(auth()->user()->is_admin == 1)
+                @if(auth()->user()->is_admin === 1)
             <li class=" cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('dashboard.index') }}">پنل مدیریت</a></li>
             @endif
+            @endauth
             <li class=" cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>
             <li class=" cursor-pointer hover:text-green-400 transition-all mode">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -115,10 +115,10 @@
             @endguest
             @auth
                 <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('user_logout') }}">خروج</a></li>
-            @endauth
             @if(auth()->user()->is_admin == 1)
                 <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all"><a wire:navigate href="{{ route('dashboard.index') }}">پنل مدیریت</a></li>
             @endif
+            @endauth
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">پنل سازمانی</li>
             <li class="mr-5 my-3 cursor-pointer hover:text-green-400 transition-all">باشگاه رانندگان</li>
