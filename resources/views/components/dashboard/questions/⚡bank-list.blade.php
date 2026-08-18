@@ -104,7 +104,7 @@ new #[Layout('layouts::dashboard')] #[Title('بانک سوالات')] class exte
                     </td>
 
                     <td class="py-3">
-                        {{ $question->exam->title }}
+                        {{ $question->exam->title ?? 'در آزمونی نیست' }}
                     </td>
 
                     <td class="py-3">
