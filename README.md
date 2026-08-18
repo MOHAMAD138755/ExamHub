@@ -10,15 +10,15 @@
 
 ![ExamHub Homepage](ScreenShot/Home.png)
 
-### Exams Dashboard
+### Examination Dashboard
 
-![Exams List](ScreenShot/Dashboard.png)
+![Exams List](ScreenShot/dashboard.png)
 
-### Users List
+### Examination List
 
-![Users List](ScreenShot/users.png)
+![Exam List](ScreenShot/users.png)
 
-### Exam List
+### My Examination
 
 ![Exam Result](ScreenShot/exam-list.png)
 
