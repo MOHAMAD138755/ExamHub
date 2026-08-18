@@ -2,6 +2,7 @@
 
 use App\Models\Exam;
 use App\Models\Question;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -24,10 +25,16 @@ new class extends Component {
             ]);
         }
 
-        if($examUser->pivot->submitted_at !== null){
+        if ($examUser->pivot->submitted_at !== null) {
             $this->redirectRoute('exams.my-exams', navigate: true);
             return;
         }
+
+        $this->answers = DB::table('exam_answers')
+            ->where('user_id',auth()->id())
+            ->where('exam_id',$this->exam->id)
+            ->pluck('option_id','question_id')
+            ->toArray();
     }
 
     #[Computed]
@@ -54,7 +61,28 @@ new class extends Component {
 
     public function selectAnswer($question_id, $option_id)
     {
+        $questions = Question::findOrFail($question_id);
+        abort_unless(
+            $questions->exam_id === $this->exam->id,
+            403
+        );
+        abort_unless(
+            $questions->options()->whereKey($option_id)->exists(),
+            403
+        );
         $this->answers[$question_id] = $option_id;
+        DB::table('exam_answers')->updateOrInsert(
+            [
+                'exam_id' => $this->exam->id,
+                'user_id' => auth()->id(),
+                'question_id' => $question_id
+            ],
+            [
+                'option_id' => $option_id,
+                'updated_at' => now(),
+                'created_at' => now(),
+            ]
+        );
     }
 
     public function submitExam()
@@ -63,11 +91,11 @@ new class extends Component {
             ->exams()
             ->where('exam_id', $this->exam->id)
             ->firstOrFail();
-        $started_at = \Carbon\Carbon::parse($examUser->pivot->started_at);
-        $endTime = $started_at
-            ->copy()
-            ->addMinutes($this->exam->duration);
-        $timeIsUp = now()->greaterThanOrEqualTo($endTime);
+//        $started_at = \Carbon\Carbon::parse($examUser->pivot->started_at);
+//        $endTime = $started_at
+//            ->copy()
+//            ->addMinutes($this->exam->duration);
+//        $timeIsUp = now()->greaterThanOrEqualTo($endTime);
 
         if ($examUser->pivot->submitted_at !== null) {
             return;
@@ -95,7 +123,7 @@ new class extends Component {
         auth()->user()
             ->exams()
             ->updateExistingPivot($this->exam->id, [
-                'score' => round($score,2),
+                'score' => round($score, 2),
                 'submitted_at' => now()
             ]);
 
@@ -105,7 +133,7 @@ new class extends Component {
     public function next()
     {
         $questions = $this->questions[$this->currentIndex];
-        if(!isset($this->answers[$questions->id])){
+        if (!isset($this->answers[$questions->id])) {
             return;
         }
         if ($this->currentIndex < $this->questions()->count() - 1) {
@@ -123,10 +151,10 @@ new class extends Component {
 ?>
 <div class="flex  items-center flex-col flex-wrap w-[80%] min-h-screen mx-auto justify-center select-none">
     <div class="flex flex-row-reverse text-lg">
-    <h2 class="mx-2"> :نام آزمون</h2>
-    <p>{{ $this->exam->title }}</p>
+        <h2 class="mx-2"> :نام آزمون</h2>
+        <p>{{ $this->exam->title }}</p>
     </div>
-    <div  wire:ignore id="timer" class="my-2 text-2xl"></div>
+    <div wire:ignore id="timer" class="my-2 text-2xl"></div>
     @if($this->questions->isNotEmpty())
         @php
             $question = $this->questions[$this->currentIndex];
@@ -134,39 +162,40 @@ new class extends Component {
         <div
             class="bg-white shadow-2xl rounded-lg lg:w-[40%] md:w-[65%] w-[100%]  dark:bg-gray-800 p-5 text-center mx-auto lg:my-4 my-1">
 
-                <h2 class="text-lg font-bold">
-                    سوال:{{ $this->currentIndex + 1 }}
-                </h2>
+            <h2 class="text-lg font-bold">
+                سوال:{{ $this->currentIndex + 1 }}
+            </h2>
 
-                <h2 class="text-lg font-bold">
-                    {{ $question->question_text }}
-                </h2>
+            <h2 class="text-lg font-bold">
+                {{ $question->question_text }}
+            </h2>
 
-                <div class="space-y-3">
+            <div class="space-y-3">
 
-                    @foreach($question->options as $option)
-                        <label class="flex cursor-pointer items-center gap-3 rounded-lg border p-3 border-gray-300 font-bold">
+                @foreach($question->options as $option)
+                    <label
+                        class="flex cursor-pointer items-center gap-3 rounded-lg border p-3 border-gray-300 font-bold">
 
-                            <input wire:key="question_{{ $question->id }}_option_{{ $option->id }}"
-                                   type="radio"
-                                   name="question_{{ $question->id }}"
-                                   value="{{ $option->id }}"
-                                   wire:click="selectAnswer({{ $question->id }},{{ $option->id }})"
-                                @checked(
-                                isset($this->answers[$question->id])
-                                   && $this->answers[$question->id] == $option->id)
-                            >
+                        <input wire:key="question_{{ $question->id }}_option_{{ $option->id }}"
+                               type="radio"
+                               name="question_{{ $question->id }}"
+                               value="{{ $option->id }}"
+                               wire:click="selectAnswer({{ $question->id }},{{ $option->id }})"
+                            @checked(
+                            isset($this->answers[$question->id])
+                               && $this->answers[$question->id] == $option->id)
+                        >
 
-                            <span>
+                        <span>
                         {{ $option->option_text }}
                     </span>
 
-                        </label>
+                    </label>
 
-                    @endforeach
-                    <p>تعداد سوالات: {{ $this->questions->count() }}</p>
-                        <p>تعداد سوالات پاسخ داده شده: {{ count($this->answers) }}</p>
-                </div>
+                @endforeach
+                <p>تعداد سوالات: {{ $this->questions->count() }}</p>
+                <p>تعداد سوالات پاسخ داده شده: {{ count($this->answers) }}</p>
+            </div>
 
             <div class="flex justify-center items-center w-[100%] my-2">
                 <button
@@ -175,9 +204,10 @@ new class extends Component {
                 </button>
                 @if($this->currentIndex < $this->questions->count() - 1)
                     @if(isset($this->answers[$question->id]))
-                    <button class="mx-2 rounded-lg  border-[1px] border-green-500  w-[40%] py-2 text-green-600 transition-all hover:bg-green-700 hover:text-white cursor-pointer"
+                        <button
+                            class="mx-2 rounded-lg  border-[1px] border-green-500  w-[40%] py-2 text-green-600 transition-all hover:bg-green-700 hover:text-white cursor-pointer"
                             wire:click="next">سوال بعدی
-                    </button>
+                        </button>
                     @endif
                 @endif
             </div>
