@@ -19,7 +19,7 @@ new #[Title('همه ی آزمون ها')] #[Layout("layouts.home")] class extend
     public function exams()
     {
         return Exam::where('start_at', '<', now())
-            ->where('end_at', '>', now())->paginate(2);
+            ->where('end_at', '>', now())->where('status',1)->paginate(2);
     }
 
     #[On('createExamUser')]

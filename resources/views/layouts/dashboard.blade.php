@@ -95,11 +95,6 @@
                             <a wire:navigate href="{{ route('dashboard.tests.list') }}">لیست آزمون ها</a>
                         </li>
 
-                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
-                            <i class="fa-solid fa-circle-plus"></i>
-                            <a wire:navigate x-on:click="test=true">افزودن آزمون</a>
-                        </li>
-
                     </ul>
 
                 </li>
@@ -167,11 +162,6 @@
                             {{ request()->routeIs('dashboard.tests.list') ? 'bg-blue-600 text-white' : '' }}>
                             <i class="fa-solid fa-table-list"></i>
                             <a wire:navigate href="{{ route('dashboard.tests.list') }}">لیست آزمون ها</a>
-                        </li>
-
-                        <li class="rounded-lg px-3 py-2 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 hover:text-white hover:shadow-lg">
-                            <i class="fa-solid fa-circle-plus"></i>
-                            <a wire:navigate x-on:click="test=true">افزودن آزمون</a>
                         </li>
 
                     </ul>

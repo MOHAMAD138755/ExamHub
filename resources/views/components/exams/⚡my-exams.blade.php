@@ -18,7 +18,7 @@ new #[Title('آزمون های من')] #[Layout("layouts.home")] class extends C
     public function exams()
     {
         return auth()->user()->exams()->where('exams.start_at', '<', now())
-            ->where('exams.end_at', '>', now())->paginate(2);
+            ->where('exams.end_at', '>', now())->where('exams.status',1)->paginate(2);
     }
 
     public function selectExamId($exam_id)

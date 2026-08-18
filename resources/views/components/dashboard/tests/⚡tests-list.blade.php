@@ -73,7 +73,7 @@ new #[Layout('layouts::dashboard')] #[Title('لیست آزمون ها')] class e
 
         </div>
 
-        <a @click="test=true"
+        <a wire:click="$dispatchTo('dashboard.tests.add-test', 'exam-create')"
            class="bg-blue-600 px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition">
 
             ایجاد آزمون

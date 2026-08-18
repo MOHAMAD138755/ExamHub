@@ -114,6 +114,14 @@ new class extends Component {
         $this->reset();
         $this->dispatch('close-modal');
     }
+
+    #[On('exam-create')]
+    public function create(): void
+    {
+        $this->reset();
+        $this->mode = 'create';
+        $this->dispatch('show-modal');
+    }
 };
 ?>
 
